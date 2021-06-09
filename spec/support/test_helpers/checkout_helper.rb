@@ -26,12 +26,12 @@ module TestHelpers
 
     def setup_klarna
       Spree::PaymentMethod.where(name: 'Klarna US').first_or_create! do |payment_method|
-        payment_method.type = 'Spree::Gateway::KlarnaCredit'
+        payment_method.type = 'Spree::PaymentMethod::KlarnaCredit'
         payment_method.preferences = {
           server: 'test',
           test_mode: true,
-          api_key: 'PN02334_81166e4b64df',
-          api_secret: 'rp5RInD6lL1b53TE',
+          api_key: 'PN04734_2c76aa2373f1',
+          api_secret: 'kaZBbWsO6KlDgUy8',
           country: 'us',
         }
       end

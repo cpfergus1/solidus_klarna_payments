@@ -4,8 +4,8 @@ module TestHelpers
   module CredentialsHelper
     def klarna_credentials
       {
-        key: 'PN02334_81166e4b64df',
-        secret: 'rp5RInD6lL1b53TE',
+        key: 'PN04734_2c76aa2373f1',
+        secret: 'kaZBbWsO6KlDgUy8',
       }
     end
   end

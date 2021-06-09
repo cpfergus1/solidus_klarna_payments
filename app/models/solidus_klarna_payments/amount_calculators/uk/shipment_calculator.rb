@@ -29,7 +29,7 @@ module SolidusKlarnaPayments
         end
 
         def unit_price(shipment)
-          shipment.display_amount.cents
+          shipment.display_total.cents
         end
       end
     end

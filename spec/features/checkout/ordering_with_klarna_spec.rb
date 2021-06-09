@@ -7,7 +7,6 @@ RSpec.describe 'Ordering with Klarna', :js do
     setup_klarna
 
     visit spree.checkout_path
-
     on_the_payment_page do |payment_page|
       payment_page.load
       payment_page.select_klarna

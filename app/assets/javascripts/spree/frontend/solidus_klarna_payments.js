@@ -149,3 +149,15 @@
     n.onload = callback;
   };
 }(window.KlarnaGateway = window.KlarnaGateway || {}, jQuery));
+
+Spree.url = function (uri, query) {
+  if (uri.path === undefined) {
+    uri = new Uri(uri);
+  }
+  if (query) {
+    $.each(query, function (key, value) {
+      return uri.addQueryParam(key, value);
+    });
+  }
+  return uri;
+};

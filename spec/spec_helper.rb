@@ -27,4 +27,7 @@ require 'solidus_klarna_payments/factories'
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.use_transactional_fixtures = false
+  config.after(type: :feature) do
+    STDERR.puts page.driver.browser.manage.logs.get(:browser)
+  end
 end

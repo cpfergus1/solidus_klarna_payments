@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class Gateway
+  class PaymentMethod
     class KlarnaCredit < Spree::PaymentMethod
       preference :api_key, :string
       preference :api_secret, :string
@@ -38,7 +38,7 @@ module Spree
         ActiveMerchant::Billing::KlarnaGateway
       end
 
-      def method_type
+      def partial_name
         'klarna_credit'
       end
 
@@ -71,14 +71,14 @@ module Spree
       end
 
       def payment_amount(order_id)
-        Spree::Payment.find_by(source: source(order_id)).display_amount.cents
+        Spree::Payment.find_by(source: source(order_id)).display_total.cents
       end
 
       def capture(amount, order_id, params = {})
         order = spree_order(params)
         serialized_order = ::SolidusKlarnaPayments::OrderSerializer.new(order, options[:country]).to_hash
         klarna_params = { shipping_info: serialized_order[:shipping_info] }
-        provider.capture(amount, order_id, params.merge(klarna_params))
+        gateway.capture(amount, order_id, params.merge(klarna_params))
       end
 
       private

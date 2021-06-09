@@ -18,7 +18,7 @@ module SolidusKlarnaPayments
         # In US taxes are calculated on the whole sale.
         # Taxes related to the shipment will be added to the sale tax
         def unit_price(shipment)
-          shipment.display_amount.cents
+          shipment.display_total.cents
         end
 
         def total_amount(shipment)

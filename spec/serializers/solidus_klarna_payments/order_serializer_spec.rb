@@ -17,6 +17,7 @@ describe SolidusKlarnaPayments::OrderSerializer do
       order.line_items.first.variant.stock_items.first.adjust_count_on_hand 2
       order.line_items.first.update(quantity: 4)
       order.reload.create_proposed_shipments
+      order.save!
       Spree::OrderUpdater.new(order).update
     end.reload
   end
@@ -44,12 +45,13 @@ describe SolidusKlarnaPayments::OrderSerializer do
       allow_any_instance_of(Spree::Shipment).to receive(:shipping_method).and_return(Spree::ShippingMethod.last)
       serialized = described_class.new(overbooked_order, region).to_hash
       shipping_lines = serialized[:order_lines].count { |l| l[:type] == "shipping_fee" }
-      expect(shipping_lines).to eq(overbooked_order.shipments.count)
+      expect(shipping_lines).to eq(2)
+      expect(overbooked_order.shipments.count).to eq(2)
     end
 
     it "has one line for sales tax" do
       create(:tax_category)
-      create(:tax_rate, tax_category: Spree::TaxCategory.last)
+      create(:tax_rate, tax_categories: [Spree::TaxCategory.last])
       tax_lines = serialized[:order_lines].count { |l| l[:type] == "sales_tax" }
       expect(tax_lines).to eq(1)
     end
